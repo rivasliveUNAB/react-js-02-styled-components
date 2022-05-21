@@ -1,38 +1,41 @@
 import { useEffect } from 'react';
-import axios from 'axios';
-import Button from '../components/Atoms/Button';
-import { useAppTheme } from '../hooks/useAppTheme';
-import Title from '../components/Atoms/Title';
-import Navbar from '../components/Organisms/Navbar';
+import { Row, Col } from 'react-grid-system';
+
+import useQuery from 'hooks/useQuery';
+import Title from 'components/Atoms/Title';
+import Button from 'components/Atoms/Button';
+import Layout from 'components/Organisms/Layout';
+import CardPet from 'components/Molecules/CardPet';
 
 function Home() {
-  const { themeToggle } = useAppTheme();
+  const { data, loading, refresh } = useQuery('/pets');
 
   useEffect(() => {
-    axios
-      .get(process.env.REACT_APP_API_URL + '/v1/pets')
-      .then(({ data }) => {
-        console.log(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+    console.log({ data, loading });
+  }, [loading, data]);
 
   return (
-    <div className="App">
-      <Navbar />
-
+    <Layout>
       <Title htmlTag="h1" size={75}>
-        This is a Title
+        Pets
       </Title>
+      <Button onClick={refresh}>Refresh</Button>
 
-      <Button color="accent" labelColor="white" onClick={themeToggle}>
-        Button default
-      </Button>
-
-      <div style={{ minHeight: '100vh' }}/>
-    </div>
+      {loading ? (
+        <p>
+          <b>Loading...</b>
+        </p>
+      ) : (
+        <Row>
+          {data?.map(({ id, name, thumbnail }) => (
+            <Col key={id} xs={12} md={6} lg={4}>
+              <CardPet name={name} image={thumbnail} />
+            </Col>
+          ))}
+        </Row>
+      )}
+      <div style={{ minHeight: '100vh' }} />
+    </Layout>
   );
 }
 

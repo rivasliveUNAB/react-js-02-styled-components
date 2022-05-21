@@ -1,6 +1,6 @@
-import MenuNavbar from '../../Molecules/MenuNavbar';
-import {StyleNavbar} from './style';
-import Title from '../../Atoms/Title';
+import MenuNavbar from 'components/Molecules/MenuNavbar';
+import Title from 'components/Atoms/Title';
+import { StyleNavbar } from './style';
 
 const Navbar = () => {
   return (

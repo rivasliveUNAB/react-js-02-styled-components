@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 
-import Home from './pages/Home';
-import GlobalStyle from './styles/global';
-import { themeLight, themeDark } from './styles/theme';
-import { useAppTheme } from './hooks/useAppTheme';
+import Home from 'pages/Home';
+import GlobalStyle from 'styles/global';
+import { themeLight, themeDark } from 'styles/theme';
+import { AppThemeProvider, useAppTheme } from 'context/AppTheme';
 
-const App = () => {
+const AppRenderTheme = memo(() => {
   const { theme } = useAppTheme();
 
-  // TODO: cambiar el theme con un provider context
   return (
     <ThemeProvider theme={theme === 'light' ? themeLight : themeDark}>
       <GlobalStyle />
       <Home />
     </ThemeProvider>
+  );
+});
+
+const App = () => {
+  return (
+    <AppThemeProvider>
+      <AppRenderTheme />
+    </AppThemeProvider>
   );
 };
 
