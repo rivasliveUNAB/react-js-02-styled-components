@@ -11,10 +11,13 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.colors.text};
   }
 
+  p, span, div, button, section, h1, h2, h3, h4, h5, h6, a {
+    font-size: 14px;
+  }
+
   * {
     margin: 0;
     padding: 0;
-    font-size: 14px;
     box-sizing: border-box;
   }
 

@@ -3,8 +3,12 @@ import Button from '../../Atoms/Button';
 
 export const StyleMenuNavbar = styled.div`
   width: auto;
-  display: flex;
+  display: none;
   flex-direction: row;
+
+  @media screen and (min-width: 768px) {
+    display: flex;
+  }
 `;
 
 export const StyleMenuItem = styled(Button)`

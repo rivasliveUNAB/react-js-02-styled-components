@@ -10,15 +10,17 @@ const colorsLight = {
   white: '#fff',
   transparent: 'transparent',
   background: '#ffffff',
+  bgCard: 'rgba(100, 100, 200, .2)',
   text: '#000000',
-  nav: 'rgba(255, 255, 255, 0.8)',
+  nav: 'rgba(255, 255, 255, 0.8)'
 };
 
 const colorsDark = {
   ...colorsLight,
   background: '#000000',
   text: '#ffffff',
-  nav: 'rgba(0, 0, 0, .5)',
+  bgCard: 'rgba(100, 100, 200, 0.3)',
+  nav: 'rgba(0, 0, 0, .5)'
 };
 
 const zIndex = {
@@ -30,15 +32,15 @@ const zIndex = {
   five: 5,
   max: 10,
   nav: 20,
-  modal: 30,
+  modal: 30
 };
 
 export const themeLight = {
   colors: colorsLight,
-  zIndex,
+  zIndex
 };
 
 export const themeDark = {
   ...themeLight,
-  colors: colorsDark,
+  colors: colorsDark
 };
