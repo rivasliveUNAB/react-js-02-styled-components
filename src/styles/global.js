@@ -26,6 +26,15 @@ const GlobalStyle = createGlobalStyle`
     monospace;
   }
 
+  .ReactModal__Overlay {
+    background: ${({ theme }) => theme.colors.modal} !important;
+
+    .ReactModal__Content {
+      border: none !important;
+      background: ${({ theme }) => theme.colors.bgModal} !important;
+      color: ${({ theme }) => theme.colors.text} !important;
+    }
+  }
 `;
 
 export default GlobalStyle;
