@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .ReactModal__Overlay {
+    z-index: ${({ theme }) => theme.zIndex.modal};
     background: ${({ theme }) => theme.colors.modal} !important;
 
     .ReactModal__Content {

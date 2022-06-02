@@ -9,6 +9,12 @@ export const StyleBody = styled.div`
   padding: 20px;
 `;
 
+export const StyleFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const StyleCloseBtn = styled(Button)`
   position: absolute;
   right: 10px;

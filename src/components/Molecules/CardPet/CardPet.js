@@ -1,11 +1,15 @@
 import Text from 'components/Atoms/Text';
 import Title from 'components/Atoms/Title';
+import PencilFilled from 'components/Atoms/Icons/PencilFilled';
 
-import { StyleImage, StyleWrapper } from './style';
+import { StyleButton, StyleImage, StyleWrapper } from './style';
 
-const CardPet = ({ image, name, trainer, race }) => {
+const CardPet = ({ image, name, trainer, race, onEdit }) => {
   return (
     <StyleWrapper>
+      <StyleButton labelColor="white" onClick={onEdit}>
+        <PencilFilled />
+      </StyleButton>
       <StyleImage loading="lazy" src={image} />
       <Title size={30}>{name}</Title>
       <Text>
