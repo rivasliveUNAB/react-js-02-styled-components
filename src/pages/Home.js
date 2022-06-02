@@ -1,35 +1,60 @@
+import { useState } from 'react';
 import { Row, Col } from 'react-grid-system';
 
 import useModal from 'hooks/useModal';
 import useQuery from 'hooks/useQuery';
 import Layout from 'components/Organisms/Layout';
+import Loader from 'components/Molecules/Loader';
 import CardPet from 'components/Molecules/CardPet';
-import { AddPetModal } from 'components/Molecules/Modals';
+import { CreateOrEditPet } from 'components/Molecules/Modals';
 import HeaderPage from 'components/Molecules/HeaderPage';
 
 function Home() {
   const { visible, onToggle } = useModal();
+  const [petEdit, setPetEdit] = useState(null);
+  const { visible: isUpdate, onHidden, onVisible } = useModal();
+
   const { data, loading, refresh } = useQuery('/pets');
+
+  const onEdit = (pet) => {
+    onVisible();
+    setPetEdit(pet);
+    onToggle();
+  };
+
+  const onClose = () => {
+    onHidden();
+    setPetEdit(null);
+    onToggle();
+  };
 
   return (
     <Layout>
       <HeaderPage title="Pets" onRefresh={refresh} onAdd={onToggle} />
 
       {loading ? (
-        <p>
-          <b>Loading...</b>
-        </p>
+        <Loader />
       ) : (
         <Row>
-          {data?.map(({ id, name, thumbnail, trainer, race }) => (
-            <Col key={id} xs={12} md={6} lg={4}>
-              <CardPet name={name} image={thumbnail} race={race} trainer={`${trainer.firstName} ${trainer.lastName}`} />
-            </Col>
-          ))}
+          {data?.map((pet) => {
+            const { id, name, thumbnail, trainer, race } = pet;
+
+            return (
+              <Col key={id} xs={12} md={6} lg={3}>
+                <CardPet
+                  race={race}
+                  name={name}
+                  image={thumbnail}
+                  onEdit={() => onEdit(pet)}
+                  trainer={`${trainer.firstName} ${trainer.lastName}`}
+                />
+              </Col>
+            );
+          })}
         </Row>
       )}
 
-      <AddPetModal isOpen={visible} onCancel={onToggle} />
+      <CreateOrEditPet pet={petEdit} isOpen={visible} isUpdate={isUpdate} onRefresh={refresh} onCancel={onClose} />
     </Layout>
   );
 }

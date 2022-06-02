@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const StyleButton = styled.button`
   border: 1px solid transparent;
@@ -12,5 +12,10 @@ export const StyleButton = styled.button`
 
   &:hover {
     opacity: 0.8;
+  }
+
+  &[disabled] {
+    opacity: 0.5;
+    cursor: no-drop;
   }
 `;

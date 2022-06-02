@@ -1,12 +1,19 @@
 import LibModal from 'react-modal';
-import { customStyles, StyleBody, StyleCloseBtn } from './style';
-import Title from '../Title';
+import Title from 'components/Atoms/Title';
+import { customStyles, StyleBody, StyleCloseBtn, StyleFooter } from './style';
+import Button from '../Button';
 
 const Modal = ({
   isOpen,
   children,
   onCancel,
   title,
+  okText = 'Ok',
+  okProps = {},
+  cancelText = 'Cancel',
+  cancelProps = {
+    onClick: onCancel
+  },
   width = 350,
   contentStyle = customStyles.content,
   closeButton = true,
@@ -26,6 +33,15 @@ const Modal = ({
           </StyleCloseBtn>
         )}
         {children}
+
+        <StyleFooter>
+          {cancelText && (
+            <Button color="shadowInput" labelColor="text" {...cancelProps}>
+              {cancelText}
+            </Button>
+          )}
+          <Button {...okProps}>{okText}</Button>
+        </StyleFooter>
       </StyleBody>
     </LibModal>
   );
