@@ -1,11 +1,17 @@
 import styled from 'styled-components';
 import Button from 'components/Atoms/Button';
-import {mediaQueries} from 'styles/theme';
+import { mediaQueries } from 'styles/theme';
 
 export const StyleMenuNavbar = styled.div`
   width: auto;
   display: flex;
   flex-direction: column;
+
+  .active-item {
+    button.btn {
+      color: ${({ theme }) => theme.colors.secondary};
+    }
+  }
 
   ${mediaQueries.desktop} {
     flex-direction: row;
@@ -22,7 +28,7 @@ export const StyleMenuItem = styled(Button)`
 
   &:hover {
     opacity: 1;
-    color: ${({theme}) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   ${mediaQueries.desktop} {
