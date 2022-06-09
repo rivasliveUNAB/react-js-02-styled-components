@@ -29,9 +29,13 @@ export const StyleButton = styled(Button)`
   padding: 0;
   width:40px;
   height: 40px;
-  right: 30px;
+  right: 75px;
   top: 30px;
   border-radius: 50px;
   font-size: 18px;
   z-index: ${({ theme }) => theme.zIndex.two};
+`;
+
+export const StyleDelButton = styled(StyleButton)`
+  right: 30px;
 `;

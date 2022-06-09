@@ -6,8 +6,9 @@ import useQuery from 'hooks/useQuery';
 import Layout from 'components/Organisms/Layout';
 import Loader from 'components/Molecules/Loader';
 import CardPet from 'components/Molecules/CardPet';
-import { CreateOrEditPet } from 'components/Molecules/Modals';
 import HeaderPage from 'components/Molecules/HeaderPage';
+import { CreateOrEditPet } from 'components/Molecules/Modals';
+import useMutation from 'hooks/useMutation';
 
 function Home() {
   const { visible, onToggle } = useModal();
@@ -16,10 +17,22 @@ function Home() {
 
   const { data, loading, refresh } = useQuery('/pets');
 
+  const [deletePet] = useMutation(`/pets`, {
+    refresh,
+    method: 'delete',
+    headers: {
+      'Authorization': 'Bearer my-token'
+    },
+  });
+
   const onEdit = (pet) => {
     onVisible();
     setPetEdit(pet);
     onToggle();
+  };
+
+  const onDelete = (id) => {
+    deletePet({}, id).then();
   };
 
   const onClose = () => {
@@ -40,11 +53,12 @@ function Home() {
             const { id, name, thumbnail, trainer, race } = pet;
 
             return (
-              <Col key={id} xs={12} md={6} lg={3}>
+              <Col key={id} xs={12} md={6} lg={4} xl={3}>
                 <CardPet
                   race={race}
                   name={name}
                   image={thumbnail}
+                  onRemove={() => onDelete(pet.id)}
                   onEdit={() => onEdit(pet)}
                   trainer={`${trainer.firstName} ${trainer.lastName}`}
                 />

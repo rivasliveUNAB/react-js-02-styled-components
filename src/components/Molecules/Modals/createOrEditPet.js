@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 import useQuery from 'hooks/useQuery';
-import {formatDate} from 'utils/format';
+import { formatDate } from 'utils/format';
 import useMutation from 'hooks/useMutation';
 import Modal from 'components/Atoms/Modal';
 import Input from 'components/Atoms/Input';
@@ -11,6 +11,9 @@ const AddPetModal = ({ isOpen, onCancel, onRefresh, isUpdate = false, pet = null
   const { data, loading } = useQuery('/trainers?status=active');
   const [createOrUpdatePet, { loading: loadingAddOrUpdatePet }] = useMutation(isUpdate ? `/pets/${pet?.id}` : '/pets', {
     method: isUpdate ? 'put' : 'post', // post = create, put = update
+    headers: {
+      'Authorization': 'Bearer my-token'
+    },
     refresh: async () => {
       onCancel();
       await onRefresh();
@@ -23,7 +26,7 @@ const AddPetModal = ({ isOpen, onCancel, onRefresh, isUpdate = false, pet = null
     await createOrUpdatePet({
       variables: {
         ...data,
-        trainer: data?.trainer ? data?.trainer : pet?.trainer?.id ?? '',
+        trainer: data?.trainer ? data?.trainer : pet?.trainer?.id ?? ''
       }
     });
   };
