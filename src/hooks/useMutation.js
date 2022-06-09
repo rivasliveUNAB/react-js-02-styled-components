@@ -1,37 +1,45 @@
-import { useState, useCallback } from 'react';
-import config from 'config';
 import axios from 'axios';
+import config from 'config';
+import { useState, useCallback, useMemo } from 'react';
 
 const { baseUrl } = config;
 
 const defaultOptions = {
   method: 'post', // post | put | delete,
   variables: null,
-  refresh: null
+  refresh: null,
+  headers: {}
 };
 
 const useMutation = (url, opts = defaultOptions) => {
-  const optsResolve = {
-    ...defaultOptions,
-    ...opts
-  };
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState(null);
 
+  const optsResolve = useMemo(() => {
+    return {
+      ...defaultOptions,
+      ...opts
+    };
+  }, [opts]);
+
   const mutationFunc = useCallback(
-    async (optsFunc = {}) => {
+    async (optsFunc = {}, id = '') => {
       const options = {
         ...optsResolve,
         ...optsFunc
       };
 
-      console.log(options);
-
       setLoading(true);
 
       try {
-        const { data } = await axios[options.method](`${baseUrl}${url}`, options.variables);
+        const path = `${baseUrl}${url}/${id}`;
+        const config =
+          options.method === 'delete'
+            ? [{ data: options.variables, headers: options.headers }]
+            : [options.variables, { headers: options.headers }];
+
+        const { data } = await axios[options.method](path, ...config);
         setData(data);
         setLoading(false);
         if (options.refresh && typeof options.refresh === 'function') {
