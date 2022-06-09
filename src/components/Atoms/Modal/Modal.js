@@ -15,6 +15,7 @@ const Modal = ({
     onClick: onCancel
   },
   width = 350,
+  footer = true,
   contentStyle = customStyles.content,
   closeButton = true,
   ...restProps
@@ -34,14 +35,16 @@ const Modal = ({
         )}
         {children}
 
-        <StyleFooter>
-          {cancelText && (
-            <Button color="shadowInput" labelColor="text" {...cancelProps}>
-              {cancelText}
-            </Button>
-          )}
-          <Button {...okProps}>{okText}</Button>
-        </StyleFooter>
+        {footer && (
+          <StyleFooter>
+            {cancelText && (
+              <Button color="shadowInput" labelColor="text" {...cancelProps}>
+                {cancelText}
+              </Button>
+            )}
+            {okText && <Button {...okProps}>{okText}</Button>}
+          </StyleFooter>
+        )}
       </StyleBody>
     </LibModal>
   );

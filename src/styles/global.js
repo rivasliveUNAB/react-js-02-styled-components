@@ -26,6 +26,10 @@ const GlobalStyle = createGlobalStyle`
     monospace;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   .ReactModal__Overlay {
     z-index: ${({ theme }) => theme.zIndex.modal};
     background: ${({ theme }) => theme.colors.modal} !important;
